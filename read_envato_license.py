@@ -31,7 +31,7 @@ keys=dfs[0].keys()                            ### Get list's first keys data for
 # print(keys)
 
 ## Save header and row wise information in CSV
-with open('exportthroughnative.csv', 'w', newline='') as output_file:
+with open('exportthroughnative.csv', 'a', newline='') as output_file:
     dict_writer = csv.DictWriter(output_file, keys)
     dict_writer.writeheader()
     dict_writer.writerows(dfs)
@@ -39,4 +39,4 @@ with open('exportthroughnative.csv', 'w', newline='') as output_file:
 ## Save using pandas method
 import pandas as pd
 df = pd.DataFrame(dfs) 
-df.to_csv("exportthroughpanda.csv", index=False)
+df.to_csv("exportthroughpanda.csv", index=False, mode='a', header=False)
