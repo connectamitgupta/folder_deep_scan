@@ -100,9 +100,41 @@ def licensereadbulk(file):              ### Useful for dynamic file
 
 def list_files_in_directory(path):
     '''docstring for list_files_in_directory'''
+    filecount=0
     import os
     x = []
     for root, dirs, files in os.walk(path):
         for file in files:
-            x.append(root+'/'+file)
+            x.append(root+'\\'+file)
+        # print(dirs)    
+        filecount += len(files)             # counting files in each folder
+    print('Number of files in directory is: ',filecount)
     return x
+
+
+    
+
+def countfiles_in_directory(path):          ## Not working
+    import fnmatch
+    import os
+    dir_path = r'C:\Users\trevi\Downloads\Envato Components'
+    count = len(fnmatch.filter(os.listdir(dir_path), '*.*'))
+    print('File Count:', count)
+    return count
+
+
+def list_directory(path): 
+    import os
+    f = []
+    rootdir = 'path/to/dir'
+    for it in os.scandir(path):
+        count=0
+        if it.is_dir():
+            # print(it.path)
+            f.append(it.path)
+
+        if it.is_file():
+            count += 1
+        print("Number of files in this directory:",count)
+    print("Number of folders : ",len(f))
+    return f
