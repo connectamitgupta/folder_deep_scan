@@ -3,9 +3,18 @@
 import impfunc                             ## import function file
 
 ## Get all files in directory
+deffolder='C:\\Users\\trevi\\Downloads\\Envato Components'
 #files = impfunc.list_files_in_directory('D:\\tempp\\Django_Admin_Panel')    ## define directory
 
-files = impfunc.list_files_in_directory('C:\\Users\\trevi\\Downloads\\Envato Components')    ## define directory
+## Getting Folders and file names
+dfm=impfunc.list_files_in_directory_new(deffolder)
+import pandas as pd
+# dft = pd.DataFrame([x.as_dict() for x in fl])
+dfn = pd.DataFrame([vars(d) for d in dfm])
+print(dfn)
+
+## Getting only files from all folders
+files = impfunc.list_files_in_directory(deffolder)    ## define directory
 # files = impfunc.list_files_in_directory('D:\\Clientproject\\EnvatoElements\\webelements')    ## define directory
 
 
@@ -19,7 +28,7 @@ filtered_files = [i for i in files if '.txt' in i]
 # print('count is :',c)
 
 ## list folder
-ls_fol= impfunc.list_directory('C:\\Users\\trevi\\Downloads\\Envato Components')
+ls_fol= impfunc.list_directory(deffolder)
 # ls_fol= impfunc.list_directory('D:\\Clientproject\\EnvatoElements\\webelements')
 
 # import pandas as pd
@@ -59,12 +68,20 @@ df.to_csv("exportthroughpanda.csv", index=False, mode='a', header=False)
 
 ## Save Excel using pandas method
 import pandas as pd
+
 df = pd.DataFrame(dfs)
 filtered_files=pd.DataFrame(filtered_files)
 ls_fol=pd.DataFrame(ls_fol)
 # print(l)
 # create a excel writer object
-with pd.ExcelWriter(".\exportthroughpanda.xlsx",mode='a') as writer:
-    ls_fol.to_excel(writer, sheet_name='Folder_list',if_sheet_exists = 'overlay', index=False)
-    filtered_files.to_excel(writer, sheet_name='Files_list',if_sheet_exists = 'overlay', index=False)
-    df.to_excel(writer, sheet_name='License_list',if_sheet_exists = 'overlay', index=False)
+with pd.ExcelWriter(".\exportthroughpanda.xlsx") as writer:
+    ls_fol.to_excel(writer, sheet_name='Folder_list', index=False)
+    filtered_files.to_excel(writer, sheet_name='Files_list', index=False)
+    df.to_excel(writer, sheet_name='License_list', index=False)
+    dfn.to_excel(writer, sheet_name='Folder_details', index=False)
+    
+
+# with pd.ExcelWriter(".\exportthroughpanda.xlsx",mode='a') as writer:
+    # ls_fol.to_excel(writer, sheet_name='Folder_list',if_sheet_exists = 'overlay', index=False)
+    # filtered_files.to_excel(writer, sheet_name='Files_list',if_sheet_exists = 'overlay', index=False)
+    # df.to_excel(writer, sheet_name='License_list',if_sheet_exists = 'overlay', index=False)

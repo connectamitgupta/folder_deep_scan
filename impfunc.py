@@ -100,27 +100,54 @@ def licensereadbulk(file):              ### Useful for dynamic file
 
 def list_files_in_directory(path):
     '''docstring for list_files_in_directory'''
-    filecount=0
+    totalfilecount=0
     import os
     x = []
     for root, dirs, files in os.walk(path):
+        filecount=0
         for file in files:
             x.append(root+'\\'+file)
-        # print(dirs)    
+        # print(root,"Sub-directorties are: ",dirs)    
         filecount += len(files)             # counting files in each folder
-    print('Number of files in directory is: ',filecount)
+        # print('Number of files in directory is: ',filecount)
+    # totalfilecount += filecount
+    # print('Total file count is :',totalfilecount)
     return x
 
 
-    
+class filedet:
+    def __init__(self, loc, fname):
+        self.location = loc
+        self.name = fname
+        # print(self.location)
+        # print(self.name)
 
-def countfiles_in_directory(path):          ## Not working
-    import fnmatch
+ 
+def list_files_in_directory_new(path):
+    '''docstring for list_files_in_directory'''
+    totalfilecount=0
     import os
-    dir_path = r'C:\Users\trevi\Downloads\Envato Components'
-    count = len(fnmatch.filter(os.listdir(dir_path), '*.*'))
-    print('File Count:', count)
-    return count
+    # Python3 code here creating class
+   
+    x1= []
+    for root, dirs, files in os.walk(path):
+        filecount=0
+        for file in files:
+            # filelist={}
+            # filelist={file,root}
+            # filelist.add('location',root)
+            # x.append(root+'\\'+file)
+            x1.append(filedet(root,file))
+            # x1.append(filelist)
+
+            # print(root,"Sub-directorties are: ",dirs)    
+        # filecount += len(files)             # counting files in each folder
+        # print('Number of files in directory is: ',filecount)
+    # totalfilecount += filecount
+    # print('Total file count is :',totalfilecount)
+    return x1
+
+
 
 
 def list_directory(path): 
@@ -135,6 +162,6 @@ def list_directory(path):
 
         if it.is_file():
             count += 1
-        print("Number of files in this directory:",count)
-    print("Number of folders : ",len(f))
+    # print("Number of files in this subdirectory:",count)
+    # print("Number of folders : ",len(f))
     return f
