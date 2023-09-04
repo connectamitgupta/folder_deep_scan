@@ -85,3 +85,8 @@ with pd.ExcelWriter(".\exportthroughpanda.xlsx") as writer:
     # ls_fol.to_excel(writer, sheet_name='Folder_list',if_sheet_exists = 'overlay', index=False)
     # filtered_files.to_excel(writer, sheet_name='Files_list',if_sheet_exists = 'overlay', index=False)
     # df.to_excel(writer, sheet_name='License_list',if_sheet_exists = 'overlay', index=False)
+
+
+###################################################################################################
+#################################### V2 ###########################################################
+with open(input(), 'rU') as input_file:
