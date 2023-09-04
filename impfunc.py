@@ -115,37 +115,6 @@ def list_files_in_directory(path):
     return x
 
 
-class filedet:
-    def __init__(self, loc, fname):
-        self.location = loc
-        self.name = fname
-        # print(self.location)
-        # print(self.name)
-
- 
-def list_files_in_directory_new(path):
-    '''docstring for list_files_in_directory'''
-    totalfilecount=0
-    import os
-    # Python3 code here creating class
-   
-    x1= []
-    for root, dirs, files in os.walk(path):
-        filecount=0
-        for file in files:
-            # filelist={}
-            # filelist={file,root}
-            # filelist.add('location',root)
-            # x.append(root+'\\'+file)
-            x1.append(filedet(root,file))
-            # x1.append(filelist)
-
-            # print(root,"Sub-directorties are: ",dirs)    
-        # filecount += len(files)             # counting files in each folder
-        # print('Number of files in directory is: ',filecount)
-    # totalfilecount += filecount
-    # print('Total file count is :',totalfilecount)
-    return x1
 
 
 
@@ -171,3 +140,61 @@ def list_directory(path):
 
 ###################################################################################################
 #################################### V2 ###########################################################
+
+
+class filedet:
+    def __init__(self, loc, fname):
+        self.location = loc
+        self.name = fname
+        # print(self.location)
+        # print(self.name)
+
+ 
+def list_files_in_directory_new(path):
+    '''docstring for list_files_in_directory'''
+    totalfilecount=0
+    import os
+    # Python3 code here creating class
+   
+    x1= []
+    for root, dirs, files in os.walk(path):
+        zipcount=0
+        txtcount=0
+        jpgcount=0
+        pngcount=0
+        licensecount=0
+        for file in files:
+            # filelist={}
+            # filelist={file,root}
+            # filelist.add('location',root)
+            # x.append(root+'\\'+file)
+            
+            if '.zip' in file:
+                zipcount+=1
+
+            if '.txt' in file:
+                txtcount+=1
+
+            if '.txt' and 'license_certificate' in file:
+                licensecount+=1
+                
+
+            if '.jpg' in file:
+                jpgcount+=1
+
+            if '.png' in file:
+                pngcount+=1
+
+            # zipcount = lambda zipcount : zipcount+1 if('.zip' in file) else None
+            # txtcount = lambda txtcount : txtcount+1 if('.txt' in file) else None
+            x1.append(filedet(root,file))
+        print(root, "          ", zipcount,"          ",txtcount,"          ",licensecount,"          ",jpgcount,"          ",pngcount)
+
+            # x1.append(filelist)
+            
+            # print(root,"Sub-directorties are: ",dirs)    
+        # filecount += len(files)             # counting files in each folder
+        # print('Number of files in directory is: ',filecount)
+    # totalfilecount += filecount
+    # print('Total file count is :',totalfilecount)
+    return x1

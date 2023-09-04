@@ -5,13 +5,8 @@ import impfunc                             ## import function file
 ## Get all files in directory
 deffolder='C:\\Users\\trevi\\Downloads\\Envato Components'
 #files = impfunc.list_files_in_directory('D:\\tempp\\Django_Admin_Panel')    ## define directory
+print ("You have already defined folder to scan: ",deffolder)
 
-## Getting Folders and file names
-dfm=impfunc.list_files_in_directory_new(deffolder)
-import pandas as pd
-# dft = pd.DataFrame([x.as_dict() for x in fl])
-dfn = pd.DataFrame([vars(d) for d in dfm])
-print(dfn)
 
 ## Getting only files from all folders
 files = impfunc.list_files_in_directory(deffolder)    ## define directory
@@ -78,7 +73,7 @@ with pd.ExcelWriter(".\exportthroughpanda.xlsx") as writer:
     ls_fol.to_excel(writer, sheet_name='Folder_list', index=False)
     filtered_files.to_excel(writer, sheet_name='Files_list', index=False)
     df.to_excel(writer, sheet_name='License_list', index=False)
-    dfn.to_excel(writer, sheet_name='Folder_details', index=False)
+    # dfn.to_excel(writer, sheet_name='Folder_details', index=False)
     
 
 # with pd.ExcelWriter(".\exportthroughpanda.xlsx",mode='a') as writer:
@@ -89,4 +84,40 @@ with pd.ExcelWriter(".\exportthroughpanda.xlsx") as writer:
 
 ###################################################################################################
 #################################### V2 ###########################################################
-with open(input(), 'rU') as input_file:
+
+############ Asking user to select folder for execution ##################
+from tkinter import filedialog
+from tkinter import *
+root = Tk()
+# root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+# print (root.filename)
+folder_path = filedialog.askdirectory()
+print ("You have chosen folder to scan: ",folder_path)
+
+## Getting Folders and file names
+dfm=impfunc.list_files_in_directory_new(folder_path)
+import pandas as pd
+# dft = pd.DataFrame([x.as_dict() for x in fl])
+dfn = pd.DataFrame([vars(d) for d in dfm])
+# print(dfn)
+
+# ## Getting Folders and file names in dataframe
+# dfm=impfunc.list_files_in_directory_new(deffolder)
+# import pandas as pd
+# # dft = pd.DataFrame([x.as_dict() for x in fl])
+# dfn = pd.DataFrame([vars(d) for d in dfm])
+# print(dfn)
+print("-"*40)
+print("No. of Folders:",len(pd.unique(dfn['location'])))
+# extension = ['.zip']
+# zipcount=dfn[dfn['name'].isin(extension)]
+zipcount=dfn[dfn['name'].str.endswith('.zip')]
+textcount=dfn[dfn['name'].str.endswith('.txt')]
+
+print("No. of Zip files",len(zipcount))
+print("No. of Text (License) files",len(textcount))
+print("-"*40)
+
+# p1=input("Do you want to extract data in excel sheet")
+# print(p1)
+# print("List of unique folders: ",dfn.location.unique())
