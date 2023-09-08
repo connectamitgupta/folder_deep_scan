@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# XlSX or csv
+/export_files
+.XlSX
+.XlSX
+.csv
