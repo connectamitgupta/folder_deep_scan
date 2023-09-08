@@ -19,9 +19,9 @@ def menu():
     ******************** This Program to Help you extract licenses from Envato Elements Files ********************
     ______________________________________________________________________________________________________________
     Select option to choose:
-            1. Fixed Folder                                 [1]
-            2. Choose Dynamic Folder                        [2]
-            3. Exit                                         [3]
+            1. Fixed Folder                                 ....[1]
+            2. Choose Dynamic Folder                        ....[2]
+            3. Exit                                         ....[3]
     ______________________________________________________________________________________________________________
     ''')
 

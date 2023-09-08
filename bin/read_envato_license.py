@@ -11,7 +11,7 @@ def menuchosen_v1(output_type):
 
 
     ## Get all files in directory
-    deffolder='C:\\Users\\trevi\\Downloads\\Envato Components'
+    deffolder='D:\Clientproject\EnvatoElements\webelements2'
     #files = impfunc.list_files_in_directory('D:\\tempp\\Django_Admin_Panel')    ## define directory
     print ("You have already defined folder to scan: ",deffolder)
 
@@ -116,6 +116,7 @@ def menuchosen_v2(output_type):
     # print (root.filename)
     print (Back.YELLOW+Fore.RED+"########### Choose appropriate folder to scan now....... ")
     folder_path = filedialog.askdirectory(title="select folder to start with")
+    root. destroy()
     print(Style.RESET_ALL)
 
     print ("...You have chosen folder to scan: ",folder_path)
