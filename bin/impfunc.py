@@ -1,4 +1,6 @@
 
+from colorama import Fore
+
 def licenseread():                              ### Useful for static file
 
     filename = "D:\\tempp\\Django_Admin_Panel\license_certificate_3C9MY2EG6D.txt"
@@ -69,8 +71,12 @@ def licensereadbulk(file):              ### Useful for dynamic file
     i=0
 
     with open(filename, "r") as file:
-        record={}                               ## initialize new dictionary
+        record={}                              ## initialize new dictionary
+        ## Update file name in dictionary 
+        record.update({"file_name":filename})
+        ## Scanning through file
         for x in file:
+            ## iteration for searching required text from tuple which is set of required parameters of license
             for subs in substring:
                 lnlen=len(x)
                 if i>plen:
@@ -92,7 +98,7 @@ def licensereadbulk(file):              ### Useful for dynamic file
                     # print(ky)
                     record.update({ky:val})         ## Update dicionary with new key, value pair
                     i+=1
-    # record=[record]
+ 
     return record
     file.close()
 
@@ -135,6 +141,28 @@ def list_directory(path):
     # print("Number of folders : ",len(f))
     return f
 
+####### Main menu functions #######################################
+#### fucntion to get numeric inputs 
+def numInput(a): 
+    number = input(f"\tEnter {a} number: ") 
+    if number.isdigit(): 
+        return int(number) 
+    else: 
+        print (Fore.RED+"You must enter a number (i.e. 0,1,2...)" )
+        numInput(a)
+
+### function to get output type in main menu
+def output_format():
+    # if choice==1 or choice==2:
+    print(Fore.BLUE+'''
+        __________________________________________________________________________________________
+        ******************** What do you want to generate XLSX or CSV or json ********************
+        A. XLSX                                           ....[1]
+        B. Json                                           ....[2]
+        ''')
+    
+    typec = numInput("output choice")
+    return typec
 
 
 
@@ -182,10 +210,10 @@ def list_files_in_directory_new(path):
     '''docstring for list_files_in_directory'''
     totalfilecount=0
     import os
-    # Python3 code here creating class
+    ### Python code here creating list
     x1 = []
     x2 = []
-    ## Going through loop for each folder
+    ### Going through loop for each folder
     for root, dirs, files in os.walk(path):
         ## initialize importnat type count to zero for each folder
         zipcount=0
@@ -214,9 +242,10 @@ def list_files_in_directory_new(path):
             else:
                 othercount+=1
 
-            # appending object to filelist class
+            ## creating object and appending object to filelist class for folder and files inside
             x2.append(filedet(root,file))
         # print(root, "          ", zipcount,"          ",txtcount,"          ",licensecount,"          ",jpgcount,"          ",pngcount)
+        ## creating object and appending extended information for each folder
         x1.append(folderdetcount(root,zipcount,txtcount,jpgcount,pngcount,licensecount,pdfcount,othercount))
         
     return x1,x2
