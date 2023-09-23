@@ -11,7 +11,8 @@ def menuchosen_v1(output_type):
 
 
     ## Get all files in directory
-    deffolder='D:\Clientproject\EnvatoElements\webelements2'
+    # deffolder='D:\Clientproject\EnvatoElements\Envbackup'
+    deffolder=r'D:\Clientproject\EnvatoElements\test'
     #files = impfunc.list_files_in_directory('D:\\tempp\\Django_Admin_Panel')    ## define directory
     print ("You have already defined folder to scan: ",deffolder)
 
@@ -131,6 +132,121 @@ def menuchosen_v2(output_type):
 
     ## Getting only files from all folders
     files = impfunc.list_files_in_directory(folder_path)    ## define directory
+
+
+
+    ## get filterered files only txt extension files
+    filtered_files = [i for i in files if '.txt' in i]
+    # print(filtered_files)
+
+    ## Read all files one by one through this loop
+    dfs = []                                ### initialize new list
+    for file in filtered_files:
+        # print(file)
+    #   df = pd.read_csv(file,sep='\t')
+        a=impfunc.licensereadbulk(file)       ### Use custom function to extract data from files
+        # print(df)
+        dfs.append(a)                      ### append list item 
+    # print(type(dfs))
+
+
+    try:
+        #### Temporary block
+        print("-"*40)
+        print("No. of Folders:",len(pd.unique(dfm['folder_location'])))
+        # extension = ['.zip']
+        # zipcount=dfn[dfn['name'].isin(extension)]
+        zipcount=dfm[dfm['file_name'].str.endswith('.zip')]
+        textcount=dfm[dfm['file_name'].str.endswith('.txt')]
+
+        print("No. of Zip files",len(zipcount))
+        print("No. of Text (License) files",len(textcount))
+        print("-"*40)
+        ### Temporary block ends here
+    except:
+        pass
+
+    ### Statstics information
+    dfc_len=len(dfc)
+    dfm_len=len(dfm)
+    dfinfo_len=len(dfs)
+    
+    stat=Fore.YELLOW+f"\n No. of folders: {dfc_len}\n No. of files: {dfm_len}\n No. of license files: {dfinfo_len} "
+    
+
+#### Converting list of objects  to pandas dataframe
+    ### folder information seperate object columns and save as dataframe
+    dfc=pd.DataFrame([vars(d) for d in dfc])
+    # print(dfc)
+
+    ### all files information and seperate object columns and save as dataframe
+    dfm = pd.DataFrame([vars(d) for d in dfm])
+        # print(dfm)
+
+    ### deep scanned file info all info 
+    dfinfo=pd.DataFrame(dfs)
+
+    if output_type==1:
+        with pd.ExcelWriter(".\export_files\india.xlsx") as writer:
+            dfc.to_excel(writer, sheet_name='Folder_information', index=False, header=True)
+            dfm.to_excel(writer, sheet_name='Files_information', index=False, header=True)
+            dfinfo.to_excel(writer, sheet_name='DeepFileinformation', index=False, header=True)
+
+        # dfc.to_json('file1.json', orient = 'split', compression = 'infer')
+        msg=Fore.GREEN+'Folder scanned and XLSX Files created successfully'+stat
+    elif output_type==2:
+        # msg=Fore.GREEN+"check json now"
+        ## Created new dictionary and assigned existing dataframe as json child object by converting datarame to json
+        # concatdata={"Folder_list":ls_fol,"Files_list":filtered_files}
+        # print(dfc)
+        concatdata={"Folder_list":dfc.to_json(),"Files_list":dfm.to_json(),"License_list":dfinfo.to_json()}
+        with open(".\export_files\deepanalysis.json", "w") as outfile:
+            json.dump(concatdata, outfile)
+        msg=Fore.GREEN+'Folder(s) scanned and json File created successfully'+stat
+    else:
+        msg=Fore.RED+"No valid type was chosen."
+
+
+    return msg
+
+
+#################################################################################################
+##################### V3 ########################################################################
+
+def menuchosen_v3(output_type):
+
+    ############ Asking user to select folder for execution ##################
+    # from tkinter import filedialog
+    # from tkinter import *
+    root = Tk()
+    # root.filename =  filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+    # print (root.filename)
+    print (Back.YELLOW+Fore.RED+"########### Choose appropriate folder to scan now....... ")
+    source_folder_path = filedialog.askdirectory(title="select folder to start with")
+    root. destroy()
+    print(Style.RESET_ALL)
+    print ("...You have chosen folder to scan: ",source_folder_path)
+
+
+    # print (Back.YELLOW+Fore.RED+"########### Select Git Folder....... ")
+    # Git_folder_path = filedialog.askdirectory(title="select Git to start with")
+    # root. destroy()
+    # print(Style.RESET_ALL)
+
+
+
+
+    ### Getting Folders and file names throough function and get multiple objects
+    dfc, dfm=impfunc.list_files_in_directory_v3(source_folder_path)
+    # dft = pd.DataFrame([x.as_dict() for x in fl])
+    
+    ### all files information and seperate object columns and save as dataframe
+    # dfm = pd.DataFrame([vars(d) for d in dfm])
+        # print(dfc)
+        # print(dfm)
+
+    ## Getting only files from all folders
+    files = impfunc.list_files_in_directory(source_folder_path)    ## define directory
 
 
 

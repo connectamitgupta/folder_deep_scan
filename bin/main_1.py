@@ -21,7 +21,9 @@ def menu():
     Select option to choose:
             1. Fixed Folder                                 ....[1]
             2. Choose Dynamic Folder                        ....[2]
+                          
             3. Exit                                         ....[3]
+            4. Dynamic Folder with Git publish              ....[4]
     ______________________________________________________________________________________________________________
     ''')
 
@@ -44,6 +46,12 @@ def menuInput():
         elif choice ==3:
             print("Thanks for using this program Bye Bye !!!")
             exit()
+        elif choice == 4:
+            typec=impfunc.output_format()
+            x=read_envato_license.menuchosen_v3(typec)
+            print(x)
+            # break
+        
         else:
             print(Fore.RED +'Try again ')
 
