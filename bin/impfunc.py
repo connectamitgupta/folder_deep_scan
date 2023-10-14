@@ -271,6 +271,8 @@ def list_files_in_directory_v3(path):
     # try:
     '''docstring for list_files_in_directory'''
     totalfilecount=0
+    ### defiing constant for Git 
+    gitremoterepopath="https://gitlab.com/trevita-envatoelements/set-8"
     import os
     
     #### List of directories
@@ -285,19 +287,44 @@ def list_files_in_directory_v3(path):
     gitdirpath = os.path.join(path, gitdir)
     import git
     from git import Repo
+    gitremoterepopath="https://gitlab.com/trevita-envatoelements/set-8"
 
     if os.path.exists(gitdirpath):
         print("Folder exists",gitdirpath)
         tempxx = is_git_repo(gitdirpath)
-        print("This is valid git directory",tempxx)
+        if tempxx==True:
+            print("This is valid git directory",tempxx)
+        elif tempxx==False:
+            print("This is not a valid git directory",tempxx)
+
+            print("Git remote default path is:",gitremoterepopath)
+            grrp_check=input("Do you want to change in it(Yes/No): ")
+            if ((grrp_check=='Yes') or (grrp_check=='Y') or (grrp_check=='y')):
+                gitremoterepopath=input("Enter New Path: 1st ")
+                ##pending validaion of input url valid or not
+
+                Repo.clone_from(gitremoterepopath,gitdirpath)
+            else:
+                Repo.clone_from(gitremoterepopath,gitdirpath)    
 
     else:
         print("Need to create folder",gitdirpath)
         os.mkdir(gitdirpath)
         print("Directory '% s' created" % gitdir) 
-        import git
-        from git import Repo
-        Repo.clone_from("https://gitlab.com/Trevita/my-envato-2023",gitdirpath)
+        # import git
+        # from git import Repo
+        # gitremoterepopath="https://gitlab.com/Trevita/my-envato-2023"
+        print("Git remote default path is:",gitremoterepopath)
+        grrp_check=input("Do you want to change in it(Yes/No): ")
+        if ((grrp_check=='Yes') or (grrp_check=='Y') or (grrp_check=='y')):
+            gitremoterepopath=input("Enter New Path: 2nd")
+            ##pending validaion of input url valid or not
+            print("You enter value is :",gitremoterepopath)
+            # grrp_path_check=git.execute(f"git ls-remote {gitremoterepopath}")
+            # print("grrp_path_check",grrp_path_check) 
+            Repo.clone_from(gitremoterepopath,gitdirpath)
+        else:
+            Repo.clone_from(gitremoterepopath,gitdirpath)
         
     repo=git.Repo(gitdirpath)
     # repo.git.pull()
@@ -538,7 +565,6 @@ def list_files_in_directory_v3(path):
             # y8=repo.git.execute(f"git push origin {folderName}")
             # print("y8: ",y8)
         
-
             ## folder info
             from pathlib import Path
             # p = Path("/a/b/c/d/e.txt")
