@@ -272,7 +272,7 @@ def list_files_in_directory_v3(path):
     '''docstring for list_files_in_directory'''
     totalfilecount=0
     ### defiing constant for Git 
-    gitremoterepopath="https://gitlab.com/trevita-envatoelements/set-8"
+    gitremoterepopath="https://gitlab.com/trevita-envatoelements/set-9"
     import os
     
     #### List of directories
@@ -287,7 +287,7 @@ def list_files_in_directory_v3(path):
     gitdirpath = os.path.join(path, gitdir)
     import git
     from git import Repo
-    gitremoterepopath="https://gitlab.com/trevita-envatoelements/set-8"
+    gitremoterepopath="https://gitlab.com/trevita-envatoelements/set-9"
 
     if os.path.exists(gitdirpath):
         print("Folder exists",gitdirpath)
